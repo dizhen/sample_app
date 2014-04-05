@@ -4,6 +4,12 @@ SampleApp::Application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
+<<<<<<< HEAD
+=======
+  # led and caching is turned on.
+  config.consider_all_requests
+
+>>>>>>> updating-users
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
   # and those relying on copy on write to perform better.
