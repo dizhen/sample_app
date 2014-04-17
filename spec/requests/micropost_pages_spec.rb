@@ -31,6 +31,20 @@ describe "Micropost pages" do
     end
   end
 
+  #Ex 10.5.2
+  describe "micropost pagination" do 
+    before  do 
+      51.times { FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum") }
+      visit root_path
+    end
+    
+    it "should list each micropost" do
+      Micropost.paginate(page: 1).each do |m|
+        expect(page).to have_content(m.content)
+      end
+    end
+  end
+
   describe "micropost destruction" do
     before { FactoryGirl.create(:micropost, user: user) }
 
@@ -39,6 +53,18 @@ describe "Micropost pages" do
 
       it "should delete a micropost" do
         expect { click_link "delete" }.to change(Micropost, :count).by(-1)
+      end
+    end
+
+    describe "as another user" do
+      before do 
+        another = FactoryGirl.create(:user)
+        FactoryGirl.create(:micropost, user: another, content: "blah blah")
+        visit user_path(another)
+      end
+      
+      it "should not be able to delete a micropost" do
+        should_not have_link("delete")
       end
     end
   end

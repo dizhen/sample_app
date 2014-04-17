@@ -31,6 +31,29 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      # Ex 10.5.1
+      it "should pluralize micropost for more than one microposts in sidebar" do
+        expect(page).to have_content("microposts")
+      end
+    end
+
+    # Ex 10.5.1
+    describe "sidebar" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "blah blah")
+        sign_in user
+        visit root_path
+      end
+
+      it "should have micropost count" do
+        expect(page).to have_content(user.microposts.count)
+      end
+
+      it "should pluralize micropost for just one micropost" do
+        expect(page).to have_content("micropost")
+      end
     end
   end
 
