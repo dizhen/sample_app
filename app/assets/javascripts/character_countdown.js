@@ -17,4 +17,4 @@ jQuery(document).ready(function($) {
   updateCountdown();
   $('.micropost_text_area').change(updateCountdown);
   $('.micropost_text_area').keyup(updateCountdown);
-}
+});
