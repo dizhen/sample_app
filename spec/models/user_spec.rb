@@ -197,4 +197,19 @@ describe User do
       its(:followed_users) { should_not include(other_user) }
     end
   end
+
+  #ch11 ex1
+  describe "following relationship dependence" do
+    let(:follower) { FactoryGirl.create(:user) }
+    let(:followed) { FactoryGirl.create(:user) }
+    let!(:relationship) { follower.relationships.create(followed_id: followed.id) }
+    it "should destroy associated relationship" do
+      relationships = follower.relationships.to_a
+      follower.destroy
+      expect(relationships).not_to be_empty
+      relationships.each do |r|
+        expect(Relationship.where(follower_id: follower.id)).to be_empty
+      end
+    end
+  end
 end
